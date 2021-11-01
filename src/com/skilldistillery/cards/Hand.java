@@ -6,13 +6,11 @@ import java.util.List;
 public abstract class Hand {
 	protected List<Card> cards = new ArrayList<>();
 	
-	
 	public Hand() {
 		
 	}
 	
 	abstract int getHandValue();
-
 
 	@Override
 	public String toString() {
@@ -28,12 +26,4 @@ public abstract class Hand {
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
 	}
-	
-	
-
-	
-	
-	
-	
-	
 }

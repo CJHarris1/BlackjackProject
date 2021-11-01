@@ -17,6 +17,18 @@ public class Player {
 		return playerHand;
 	}
 	
+	public boolean checkTwoAces(Player player, Player dealer) {
+		boolean stopPlaying = false;
+		int playerHandVal = player.playerHand.getHandValue();
+		int dealerHandVal = dealer.playerHand.getHandValue();
+		
+		if(playerHandVal > 21 || dealerHandVal > 21) {
+			stopPlaying = true;
+			System.out.println("delt 2 aces, resetting hand!");
+		}
+		return stopPlaying;
+	}
+	
 	public boolean viewHandAndValue() {
 		boolean hasBlackJack = false;
 		System.out.print("Player's hand: ");

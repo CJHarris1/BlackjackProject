@@ -6,10 +6,14 @@ import com.skilldistillery.cards.Card;
 import com.skilldistillery.cards.Deck;
 
 public class BlackJackDealer extends Player {
-	Deck deck = new Deck();
+	Deck deck; 
 	
 	public BlackJackDealer() {
 		
+	}
+	
+	public void resetDeck() {
+		deck = new Deck();
 	}
 	
 	public void shuffleDeck() {
@@ -62,7 +66,7 @@ public class BlackJackDealer extends Player {
 	
 	public boolean stay() {
 		boolean stay = false;
-		if(playerHand.getHandValue() > 17 && playerHand.getHandValue() <= 21) {
+		if(playerHand.getHandValue() >= 17 && playerHand.getHandValue() <= 21) {
 			stay = true;
 		}
 		return stay;

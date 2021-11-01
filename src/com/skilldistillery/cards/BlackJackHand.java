@@ -40,5 +40,4 @@ public class BlackJackHand extends Hand{
 		}
 		return isBust;
 	}
-
 }

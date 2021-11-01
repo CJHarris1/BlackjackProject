@@ -7,11 +7,10 @@ Scanner scanner = new Scanner(System.in);
 BlackJackDealer dealer = new BlackJackDealer();
 Player player = new Player();
 
-//instant lose for 2 aces
-//if player holds on lower than 17 need to check win
 	public static void main(String[] args) {
 		BlackJackApp app = new BlackJackApp();
 		
+		System.out.println("Welcome to BlackJack!");
 		boolean playAgain = true;
 		while(playAgain) {
 		app.reset();
@@ -22,28 +21,32 @@ Player player = new Player();
 	}
 	
 	public void run() {
+		dealer.resetDeck();
+		System.out.println("cards in deck: " + dealer.deck.checkDeckSize());
 		shuffleAndDeal();
-		boolean PlayerHasBlackJack = false;
-		boolean DealerHasBlackJack = false;
+		boolean playerHasBlackJack = false;
+		boolean dealerHasBlackJack = false;
+		boolean hasTwoAces = false;
 		
 		
 		//if either player has black jack, keepPlaying = false and game ends
-		PlayerHasBlackJack = player.viewHandAndValue();
-		DealerHasBlackJack = dealer.viewDealerHandAndValue();
-		
+		playerHasBlackJack = player.viewHandAndValue();
+		dealerHasBlackJack = dealer.viewDealerHandAndValue();
+		hasTwoAces = dealer.checkTwoAces(player, dealer);
 		
 	
-		if(!PlayerHasBlackJack && !DealerHasBlackJack) {
+		if(!playerHasBlackJack && !dealerHasBlackJack && !hasTwoAces) {
 			while(playerTurn()) {
 				continue;
 				
 			}
 			if(!player.checkIfBust()) {
 				dealer.flipHiddenCard();
-				while(dealerTurn()) {
-					continue;
+				if(!playerHoldUnder17()) {
+					while(dealerTurn()) {
+						continue;
+					}
 				}
-				
 			}	
 		}
 	}
@@ -80,6 +83,15 @@ Player player = new Player();
 		return playerTurn;
 	}
 	
+	public boolean playerHoldUnder17() {
+		boolean gameOver = false;
+		if(dealer.playerHand.getHandValue() > player.playerHand.getHandValue()) {
+			System.out.println("Dealer wins! \n");
+			gameOver = true;
+		}
+		return gameOver;
+	}
+	
 	public boolean dealerTurn() {
 		boolean dealerTurn = true;
 		
@@ -106,6 +118,7 @@ Player player = new Player();
 		}
 		return dealerTurn;
 	}
+	
 	public void checkWinner() {
 		if(player.playerHand.getHandValue() > dealer.playerHand.getHandValue()) {
 			System.out.println("Player wins! \n");
